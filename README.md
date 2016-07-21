@@ -1,4 +1,4 @@
-# shopping-cart-vue
+# vue-shopping-cart
 
 > A Vue.js project
 
