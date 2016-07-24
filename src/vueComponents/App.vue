@@ -25,7 +25,7 @@
                           </g>
                         </svg>
                     </div>
-                        Card
+                        Cart
                     </a>
                 </li>
             </ul>

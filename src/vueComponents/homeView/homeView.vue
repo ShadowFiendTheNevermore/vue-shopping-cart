@@ -7,13 +7,13 @@
         <aside class="aside-row">
             <sell-basket :added-items.sync="cartItems"></sell-basket>
         </aside>
-        <notifyer :item="notifyItem" v-show="notifyed"></notifyer>
+        <notifyer :items="cartItems"></notifyer>
     </div>
 </template>
 <script>
 import SellItem from "./components/sellItem/sellItem.vue"
 import SellBasket from "./components/sellBasket/sellBasket.vue"
-import Notifyer from "./components/notifyer/sellItemNotifyer.vue"
+import Notifyer from "./components/notifyer/Notifyer.vue"
 export default {
     data() {
         return {
@@ -23,18 +23,7 @@ export default {
                 {name: 'Test Name #3', price: 4.55, type:'TEST', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi quae neque dicta id quo asperiores hic, ratione ex dignissimos voluptate.'},
                 {name: 'Test Name #4', price: 7.25, type:'TEST', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi quae neque dicta id quo asperiores hic, ratione ex dignissimos voluptate.'}
             ],
-            notifyItem: null,
-            notifyed: false,
             cartItems: [],
-        }
-    },
-    methods: {
-        notifyAboutSellItem(item) {
-            this.$set('notifyItem', item)
-            this.notifyed = true
-            setTimeout(() => {
-                if (this.notifyed === true) this.notifyed = false
-            }, 3500)
         }
     },
     events: {
@@ -43,9 +32,10 @@ export default {
             for (var i = 0; i < this.cartItems.length; i++) {
                 if (this.cartItems[i].name === item.name) {
                     let newItem = this.cartItems[i]
+                    
                     this.cartItems.$set(i, newItem)
                     this.$parent.shoppingCart.$set(i, newItem)
-                    this.notifyAboutSellItem(newItem)
+                    
                     found = true
                     break;
                 }
@@ -54,7 +44,7 @@ export default {
                 // If not found add item in cartItems
                 this.cartItems.push(item)
                 this.$parent.shoppingCart.push(item)
-                this.notifyAboutSellItem(item)
+                this.notifyAboutItem()
             }
         },
         'sell-item-remove': function () {
@@ -92,6 +82,15 @@ export default {
     .aside-row {
         width: 30%;
         display: block;
+    }
+    .notify {
+        &-transition {
+            transition: opacity 1s ease;
+            
+        }
+        &-enter, &-leave {
+            opacity: 0;
+        }
     }
     @media all and (max-width: 800px) {
         .row-container {
