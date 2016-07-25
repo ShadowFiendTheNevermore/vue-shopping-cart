@@ -5,9 +5,9 @@
             </sell-item>
         </main>
         <aside class="aside-row">
-            <sell-basket :added-items.sync="cartItems"></sell-basket>
+            <sell-basket :added-items="cartItems"></sell-basket>
         </aside>
-        <notifyer :items="cartItems"></notifyer>
+        <notifyer :notifications="notificationItems"></notifyer>
     </div>
 </template>
 <script>
@@ -24,6 +24,7 @@ export default {
                 {name: 'Test Name #4', price: 7.25, type:'TEST', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi quae neque dicta id quo asperiores hic, ratione ex dignissimos voluptate.'}
             ],
             cartItems: [],
+            notificationItems: []
         }
     },
     events: {
@@ -32,29 +33,33 @@ export default {
             for (var i = 0; i < this.cartItems.length; i++) {
                 if (this.cartItems[i].name === item.name) {
                     let newItem = this.cartItems[i]
-                    
                     this.cartItems.$set(i, newItem)
                     this.$parent.shoppingCart.$set(i, newItem)
-                    
                     found = true
                     break;
                 }
             }
             if (!found) {
-                // If not found add item in cartItems
+                // If not found, add item in cartItems and to parent shoppingCart
                 this.cartItems.push(item)
+                this.notificationItems.push(item)
                 this.$parent.shoppingCart.push(item)
-                this.notifyAboutItem()
             }
         },
         'sell-item-remove': function () {
             for (var i = 0; i < this.cartItems.length; i++) {
-                if (this.cartItems[i].count === 0) {
+                if (this.cartItems[i].count <= 0) {
                     // Remove item from cartItems
                     this.$parent.shoppingCart.$remove(this.cartItems[i])
                     this.cartItems.$remove(this.cartItems[i])
                 }
             }
+        }
+    },
+    route: {
+        activate() {
+            this.$dispatch('sell-item-remove')
+            console.log('action on activated has been completed');
         }
     },
     components: {

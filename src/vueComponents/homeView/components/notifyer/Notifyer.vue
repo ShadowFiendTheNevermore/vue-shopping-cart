@@ -1,6 +1,6 @@
 <template>
     <div class="notifyer">
-        <notify-element v-for="item in items" :item="item">
+        <notify-element v-for="notification in notifications" :notification="notification" @close-notification="removeNotification">
         </notify-element>
     </div>
 </template>
@@ -19,8 +19,13 @@
 import NotifyElement from './components/notifyElement.vue'
 export default {
     props: [
-        'items',
+        'notifications',
     ],
+    methods: {
+        removeNotification(notification) {
+            this.notifications.$remove(notification)
+        }
+    },
     components: {
         NotifyElement
     }

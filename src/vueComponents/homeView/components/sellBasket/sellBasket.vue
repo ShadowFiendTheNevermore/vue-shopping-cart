@@ -28,6 +28,9 @@
                 </div>
             </div>
         </div>
+        <div v-show="addedItems.length == 0" class="sell-basket__empty-message">
+            Sell basket is empty
+        </div>
         <div v-show="addedItems.length > 0" class="sell-basket__purchase">
             <a v-link="{path: '/viewCart'}" class="sell-basket__purchase-button">Purchase</a>
         </div>
@@ -90,6 +93,10 @@
                     text-shadow: 1px 1px 2px rgba(0,0,0, .3);
                 }
             }
+        }
+        &__empty-message {
+            font-size: 17px;
+            text-align: center;
         }
         &__purchase{
             margin-top: 30px;

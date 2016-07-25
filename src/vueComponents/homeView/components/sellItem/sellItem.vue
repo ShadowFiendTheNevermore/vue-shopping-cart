@@ -34,8 +34,8 @@
             </div>
             <div class="sell-item__action-panel hide-if-notsmall">
                 <div class="action-panel__action-buttons">
-                    <a href="#" @click="addToBasket()" class="action-panel__action-button action-button--inc">Add to cart</a>
-                    <a href="#" @click="removeFromBasket()" class="action-panel__action-button action-button--dec">Remove from cart</a>
+                    <button @click="addToBasket()" class="action-panel__action-button action-button--inc">Add to cart</button>
+                    <button @click="removeFromBasket()" class="action-panel__action-button action-button--dec">Remove from cart</button>
                 </div>
             </div>
         </div>
@@ -121,6 +121,9 @@
                     padding: 15px 0;
                     color: #fff;
                     text-decoration: none;
+                    font-size: 110%;
+                    cursor: pointer;
+                    border: none;
                     &.action-button--inc {
                         background-color: $link-orange;
                         &:hover {
